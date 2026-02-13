@@ -33,8 +33,8 @@ type testReader struct {
 	nodes  []*trienode.MergedNodeSet // sorted from new to old
 }
 
-// Node implements database.NodeReader interface, retrieving trie node with
-// all available cached layers.
+// Node retrieves a trie node using all available cached layers,
+// implementing the database.NodeReader interface.
 func (r *testReader) Node(owner common.Hash, path []byte, hash common.Hash) ([]byte, error) {
 	// Check the node presence with the cached layer, from latest to oldest.
 	for _, nodes := range r.nodes {
@@ -54,7 +54,7 @@ func (r *testReader) Node(owner common.Hash, path []byte, hash common.Hash) ([]b
 	return rawdb.ReadTrieNode(r.db, owner, path, hash, r.scheme), nil
 }
 
-// testDb implements database.NodeDatabase interface, using for testing purpose.
+// testDb implements database.NodeDatabase interface, used for testing purposes.
 type testDb struct {
 	disk    ethdb.Database
 	root    common.Hash
